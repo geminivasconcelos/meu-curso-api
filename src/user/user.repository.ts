@@ -14,7 +14,7 @@ export class UserRepository {
   }
 
   async singleUserList(uuid: string) {
-    return this.users.find((user) => user.uuid === uuid);
+    return this.searchByUuid(uuid);
   }
 
   async existsWithEmail(email: string) {
@@ -23,17 +23,31 @@ export class UserRepository {
   }
 
   async updateUser(uuid: string, updateData: Partial<UserEntity>) {
+    const user = this.searchByUuid(uuid);
+    Object.entries(updateData).forEach(([key, value]) => {
+      if (key === 'uuid') {
+        return;
+      }
+      user[key] = value;
+    });
+    return user;
+  }
+
+  async deleteUser(uuid: string) {
+    const user = this.searchByUuid(uuid);
+
+    this.users = this.users.filter(userSave => userSave.uuid !== uuid)
+
+    return user;
+  }
+
+  private searchByUuid(uuid: string) {
     const possibleUser = this.users.find((userSave) => userSave.uuid === uuid);
 
     if (!possibleUser) {
       throw new Error('User does not exist');
     }
-    Object.entries(updateData).forEach(([key, value]) => {
-      if (key === 'uuid') {
-        return;
-      }
-      possibleUser[key] = value;
-    });
+
     return possibleUser;
   }
 }

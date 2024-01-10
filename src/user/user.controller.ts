@@ -1,5 +1,13 @@
 import { UserEntity } from './user.entity';
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { CreateUserDTO } from './dto/CreateUser.dto';
 import { v4 as uuid } from 'uuid';
@@ -42,16 +50,41 @@ export class UserController {
     return usersList;
   }
 
+  @Get('/:uuid')
+  async singleListUser(@Param('uuid') uuid: string) {
+    const possibleUserFound = await this.userRepository.singleUserList(uuid);
+    const usersFound = new UserListDTO(
+      possibleUserFound.name,
+      possibleUserFound.lastname,
+      possibleUserFound.uuid,
+    );
+
+    return usersFound;
+  }
+
   @Put('/:uuid')
   async updateUser(
     @Param('uuid') uuid: string,
     @Body() dataToUpdate: UpdateUserDTO,
   ) {
-   const updatedUser = await this.userRepository.updateUser(uuid, dataToUpdate);
+    const updatedUser = await this.userRepository.updateUser(
+      uuid,
+      dataToUpdate,
+    );
 
-   return {
-    user: updatedUser,
-    message: 'User updated successfully!'
-   }
+    return {
+      user: updatedUser,
+      message: 'User updated successfully!',
+    };
+  }
+
+  @Delete('/:uuid')
+  async deleteUser(@Param('uuid') uuid: string) {
+    const userRemoved = await this.userRepository.deleteUser(uuid);
+
+    return {
+      user: userRemoved,
+      message: 'User successfully deleted',
+    };
   }
 }
