@@ -36,7 +36,7 @@ export class UserRepository {
   async deleteUser(uuid: string) {
     const user = this.searchByUuid(uuid);
 
-    this.users = this.users.filter(userSave => userSave.uuid !== uuid)
+    this.users = this.users.filter((userSave) => userSave.uuid !== uuid);
 
     return user;
   }

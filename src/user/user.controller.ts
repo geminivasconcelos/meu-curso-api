@@ -34,7 +34,7 @@ export class UserController {
     userEntity.lastname = dataUser.lastName;
     userEntity.uuid = uuid();
 
-    this.userRepository.saveUser(userEntity);
+    this.userService.createUser(userEntity);
     return {
       message: 'User created successfully!',
       user: new UserListDTO(
@@ -68,7 +68,7 @@ export class UserController {
     @Param('uuid') uuid: string,
     @Body() dataToUpdate: UpdateUserDTO,
   ) {
-    const updatedUser = await this.userRepository.updateUser(
+    const updatedUser = await this.userService.updateUser(
       uuid,
       dataToUpdate,
     );
@@ -81,7 +81,7 @@ export class UserController {
 
   @Delete('/:uuid')
   async deleteUser(@Param('uuid') uuid: string) {
-    const userRemoved = await this.userRepository.deleteUser(uuid);
+    const userRemoved = await this.userService.deleteUser(uuid);
 
     return {
       user: userRemoved,
