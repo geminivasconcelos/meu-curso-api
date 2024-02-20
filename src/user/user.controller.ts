@@ -13,11 +13,15 @@ import { CreateUserDTO } from './dto/CreateUser.dto';
 import { v4 as uuid } from 'uuid';
 import { UserListDTO } from './dto/UserList.dto';
 import { UpdateUserDTO } from './dto/UpdateUser.dto';
+import { UserService } from './user.service';
 
-@Controller('/usuarios') // o @controler já nos da uma rota, como não passamos parametros a rota será a rota raiz, ou seja, 3000, agora se passar
+@Controller('/users') // o @controler já nos da uma rota, como não passamos parametros a rota será a rota raiz, ou seja, 3000, agora se passar
 // uma rota dentro de controler isso será sua rota, nessa caso nossa rota é /usuarios
 export class UserController {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private userService: UserService,
+  ) {}
 
   // private usuarioRepository = new UsuarioRepository();
 
@@ -43,11 +47,8 @@ export class UserController {
 
   @Get()
   async listUsers() {
-    const savedUsers = await this.userRepository.listUsers();
-    const usersList = savedUsers.map(
-      (user) => new UserListDTO(user.name, user.lastname, user.uuid),
-    );
-    return usersList;
+    const savedUsers = await this.userService.listUsers();
+    return savedUsers;
   }
 
   @Get('/:uuid')
