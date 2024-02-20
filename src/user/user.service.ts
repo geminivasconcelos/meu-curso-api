@@ -21,6 +21,17 @@ export class UserService {
     return usersList;
   }
 
+  async singleListUser(uuid: string) {
+    const userSave = await this.userRepository.findOneBy({ uuid: uuid });
+    const user = new UserListDTO(
+      userSave.uuid,
+      userSave.name,
+      userSave.lastname,
+    );
+
+    return user;
+  }
+
   async createUser(userEntity: UserEntity) {
     await this.userRepository.save(userEntity);
   }

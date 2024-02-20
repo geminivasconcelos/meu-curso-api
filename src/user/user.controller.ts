@@ -53,14 +53,8 @@ export class UserController {
 
   @Get('/:uuid')
   async singleListUser(@Param('uuid') uuid: string) {
-    const possibleUserFound = await this.userRepository.singleUserList(uuid);
-    const usersFound = new UserListDTO(
-      possibleUserFound.name,
-      possibleUserFound.lastname,
-      possibleUserFound.uuid,
-    );
-
-    return usersFound;
+    const possibleUserFound = await this.userService.singleListUser(uuid);
+    return possibleUserFound;
   }
 
   @Put('/:uuid')
@@ -68,10 +62,7 @@ export class UserController {
     @Param('uuid') uuid: string,
     @Body() dataToUpdate: UpdateUserDTO,
   ) {
-    const updatedUser = await this.userService.updateUser(
-      uuid,
-      dataToUpdate,
-    );
+    const updatedUser = await this.userService.updateUser(uuid, dataToUpdate);
 
     return {
       user: updatedUser,
