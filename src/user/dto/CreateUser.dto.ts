@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsArray, IsEmail, IsJSON, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 import { EmailIsUnique } from '../validation/email-is-unique.validator';
 
 export class CreateUserDTO {
@@ -21,4 +21,19 @@ export class CreateUserDTO {
     message: 'Checks if the password is longer than 6 characteres',
   })
   password: string;
+
+  @MinLength(6, {
+    message: 'Checks if the password is longer than 6 characteres',
+  })
+  repeatPassword: string;
+
+
+  @IsArray()
+  @IsOptional()
+  curso: {id: number, nome: string}[];
+
+  
+  @IsArray()
+  @IsOptional()
+  instituicao: {id: number, nome: string}[];
 }
