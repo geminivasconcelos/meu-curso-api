@@ -27,22 +27,33 @@ export class UserController {
 
   @Post()
   async criateUser(@Body() dataUser: CreateUserDTO) {
+    console.log(dataUser)
     const userEntity = new UserEntity();
     userEntity.email = dataUser.email;
     userEntity.password = dataUser.password;
     userEntity.name = dataUser.name;
     userEntity.lastname = dataUser.lastName;
+    userEntity.repeatPassword = dataUser.repeatPassword;
+    userEntity.curso = dataUser.curso;
+    userEntity.instituicao = dataUser.instituicao;
     userEntity.uuid = uuid();
 
-    this.userService.createUser(userEntity);
-    return {
-      message: 'User created successfully!',
-      user: new UserListDTO(
-        userEntity.name,
-        userEntity.lastname,
-        userEntity.uuid,
-      ),
-    };
+    const returnCreateUser = await this.userService.createUser(userEntity);
+    if (returnCreateUser.status === 409) {
+      return {
+        message: returnCreateUser.message,
+        status: returnCreateUser.status,
+      };
+    } else {
+      return {
+        message: 'User created successfully!',
+        user: new UserListDTO(
+          userEntity.name,
+          userEntity.lastname,
+          userEntity.uuid,
+        ),
+      };
+    }
   }
 
   @Get()
