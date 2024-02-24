@@ -27,15 +27,14 @@ export class UserController {
 
   @Post()
   async criateUser(@Body() dataUser: CreateUserDTO) {
-    console.log(dataUser)
     const userEntity = new UserEntity();
     userEntity.email = dataUser.email;
     userEntity.password = dataUser.password;
     userEntity.name = dataUser.name;
     userEntity.lastname = dataUser.lastName;
     userEntity.repeatPassword = dataUser.repeatPassword;
-    userEntity.curso = dataUser.curso;
-    userEntity.instituicao = dataUser.instituicao;
+    userEntity.cursos = dataUser.cursos;
+    userEntity.instituicoes = dataUser.instituicoes;
     userEntity.uuid = uuid();
 
     const returnCreateUser = await this.userService.createUser(userEntity);
@@ -51,6 +50,8 @@ export class UserController {
           userEntity.name,
           userEntity.lastname,
           userEntity.uuid,
+          userEntity.cursos,
+          userEntity.instituicoes,
         ),
       };
     }

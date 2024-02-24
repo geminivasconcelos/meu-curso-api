@@ -3,5 +3,7 @@ export class UserListDTO {
     readonly name: string,
     readonly lastname: string,
     readonly uuid: string,
+    readonly cursos: Array<any>,
+    readonly instituicoes: Array<any>
   ) {}
 }

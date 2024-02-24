@@ -42,9 +42,9 @@ export class UpdateUserDTO {
 
   @IsArray()
   @IsOptional()
-  curso: {id: number, nome: string}[];
+  cursos: {id: number, nome: string}[];
 
   @IsArray()
   @IsOptional()
-  instituicao: {id: number, nome: string}[];
+  instituicoes: {id: number, nome: string}[];
 }

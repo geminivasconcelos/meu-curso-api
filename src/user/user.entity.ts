@@ -28,9 +28,9 @@ export class UserEntity {
   repeatPassword: string;
 
   @Column('simple-json', { nullable: false, default: [] })
-  curso: {id: number, nome: string}[];;
+  cursos: {id: number, nome: string}[];;
   @Column( 'simple-json', { nullable: false, default: [] })
-  instituicao: {id: number, nome: string}[];
+  instituicoes: {id: number, nome: string}[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
