@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UpdateInstitutionDTO {
   @IsNotEmpty({
@@ -6,7 +6,11 @@ export class UpdateInstitutionDTO {
   })
   name: string;
 
+  @IsString()
+  @IsOptional()
+  acronym: string;
+
   @IsArray()
   @IsOptional()
-  cursos: { id: number; nome: string }[];
+  courses: { id: number; nome: string }[];
 }
