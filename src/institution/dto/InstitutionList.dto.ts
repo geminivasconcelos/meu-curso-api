@@ -2,6 +2,7 @@ export class InstitutionListDTO {
   constructor(
     readonly id: string,
     readonly name: string,
-    readonly cursos: Array<any>
+    readonly acronym: string,
+    readonly courses: Array<any>
   ) {}
 }
