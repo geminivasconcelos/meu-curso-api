@@ -15,7 +15,14 @@ export class UserService {
   async listUsers() {
     const usersSaves = await this.userRepository.find();
     const usersList = usersSaves.map(
-      (user) => new UserListDTO(user.uuid, user.name, user.lastname),
+      (user) =>
+        new UserListDTO(
+          user.uuid,
+          user.name,
+          user.lastname,
+          user.cursos,
+          user.instituicoes,
+        ),
     );
 
     return usersList;
@@ -27,13 +34,15 @@ export class UserService {
       userSave.uuid,
       userSave.name,
       userSave.lastname,
+      userSave.cursos,
+      userSave.instituicoes,
     );
 
     return user;
   }
 
   async createUser(userEntity: UserEntity) {
-    console.log(userEntity)
+    console.log(userEntity);
     const possibleUser = await this.userRepository.exists({
       where: { email: userEntity.email },
     });
@@ -45,6 +54,25 @@ export class UserService {
   }
 
   async updateUser(uuid: string, userEntity: UpdateUserDTO) {
+    if (userEntity.cursos) {
+      const possibleUser = await this.userRepository.findOneBy({ uuid: uuid });
+      const distinctCursos = userEntity.cursos.filter(
+        (curso) =>
+          !possibleUser.cursos.some((dbCurso) => dbCurso.id === curso.id),
+      );
+      userEntity.cursos = distinctCursos.concat(possibleUser.cursos);
+    }
+    if (userEntity.instituicoes) {
+      const possibleUser = await this.userRepository.findOneBy({ uuid: uuid });
+      const distinctCursos = userEntity.instituicoes.filter(
+        (instituicao) =>
+          !possibleUser.instituicoes.some(
+            (dbInstituicao) => dbInstituicao.id === instituicao.id,
+          ),
+      );
+      userEntity.instituicoes = distinctCursos.concat(possibleUser.instituicoes);
+    }
+
     await this.userRepository.update(uuid, userEntity);
   }
 
