@@ -4,9 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 import { InstitutionModule } from './institution/institution.module';
+import { CourseModule } from './course/course.module';
+
 
 @Module({
   imports: [
+    CourseModule,
     UserModule,
     InstitutionModule,
     ConfigModule.forRoot({
