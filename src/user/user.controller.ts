@@ -1,4 +1,3 @@
-import { UserEntity } from './user.entity';
 import {
   Body,
   Controller,
@@ -8,11 +7,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UserRepository } from './user.repository';
-import { CreateUserDTO } from './dto/CreateUser.dto';
 import { v4 as uuid } from 'uuid';
-import { UserListDTO } from './dto/UserList.dto';
+import { CreateUserDTO } from './dto/CreateUser.dto';
 import { UpdateUserDTO } from './dto/UpdateUser.dto';
+import { UserListDTO } from './dto/UserList.dto';
+import { UserEntity } from './user.entity';
+import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 
 @Controller('/users') 

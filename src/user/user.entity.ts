@@ -28,7 +28,8 @@ export class UserEntity {
   repeatPassword: string;
 
   @Column('simple-json', { nullable: false, default: [] })
-  cursos: {id: number, nome: string}[];;
+  cursos: {id: number, nome: string}[];
+  
   @Column( 'simple-json', { nullable: false, default: [] })
   instituicoes: {id: number, nome: string}[];
 

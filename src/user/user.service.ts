@@ -17,9 +17,9 @@ export class UserService {
     const usersList = usersSaves.map(
       (user) =>
         new UserListDTO(
-          user.uuid,
           user.name,
           user.lastname,
+          user.uuid,
           user.cursos,
           user.instituicoes,
         ),
@@ -31,9 +31,9 @@ export class UserService {
   async singleListUser(uuid: string) {
     const userSave = await this.userRepository.findOneBy({ uuid: uuid });
     const user = new UserListDTO(
-      userSave.uuid,
       userSave.name,
       userSave.lastname,
+      userSave.uuid,
       userSave.cursos,
       userSave.instituicoes,
     );
