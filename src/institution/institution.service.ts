@@ -17,7 +17,7 @@ export class InstitutionService {
     const institutionsList = instituionsSaves.map(
       (institution) =>
         new InstitutionListDTO(
-          institution.id,
+          institution.uuid,
           institution.name,
           institution.acronym,
           institution.courses,
@@ -27,13 +27,13 @@ export class InstitutionService {
     return institutionsList;
   }
 
-  async singleInstitution(id: string) {
+  async singleInstitution(uuid: string) {
     const institutionSave = await this.institutionRepository.findOneBy({
-      id: id,
+      uuid: uuid,
     });
 
     const institution = new InstitutionListDTO(
-      institutionSave.id,
+      institutionSave.uuid,
       institutionSave.name,
       institutionSave.acronym,
       institutionSave.courses,
@@ -45,7 +45,7 @@ export class InstitutionService {
   async createInstitution(institutionEntity: InstitutionEntity) {
     console.log(institutionEntity);
     const possibleInstitution = await this.institutionRepository.exists({
-      where: { id: institutionEntity.id },
+      where: { uuid: institutionEntity.uuid },
     });
 
     const returnCreateInstitution = possibleInstitution

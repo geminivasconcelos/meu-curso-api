@@ -1,3 +1,4 @@
+import { CourseEntity } from 'src/course/course.entity';
 import {
   Entity,
   Column,
@@ -5,21 +6,22 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'institutions' })
 export class InstitutionEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  uuid: string;
 
   @Column({ name: 'name', length: 100, nullable: false })
   name: string;
-
   
   @Column({ name: 'acronym', length: 100, nullable: false })
   acronym: string;
 
-  @Column('simple-json', { nullable: false, default: [] })
+  // @Column('simple-json', { nullable: false, default: [] })
+  @OneToMany(() => CourseEntity, (curso) => curso.institution)
   courses: { id: number; nome: string }[];
 
   @CreateDateColumn({ name: 'created_at' })

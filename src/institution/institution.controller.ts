@@ -24,7 +24,7 @@ export class InstitutionController {
     institutionEntity.name = dataInstitution.name;
     institutionEntity.courses = dataInstitution.courses;
     institutionEntity.acronym = dataInstitution.acronym;
-    institutionEntity.id = uuid();
+    institutionEntity.uuid = uuid();
 
     const returnCreateInstitution =
       await this.institutionService.createInstitution(institutionEntity);
@@ -38,7 +38,7 @@ export class InstitutionController {
         message: 'User created successfully!',
         user: new InstitutionListDTO(
           institutionEntity.name,
-          institutionEntity.id,
+          institutionEntity.uuid,
           institutionEntity.acronym,
           institutionEntity.courses,
         ),
