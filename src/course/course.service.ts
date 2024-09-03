@@ -77,4 +77,21 @@ export class CourseService {
       );
     }
   }
+
+  async listComponentsCourse(uuid: string){
+    try {
+      const course = await this.courseRepository.findOne({
+        where: { uuid: uuid },
+        relations: ['components'],
+      });
+
+      if (!course) {
+        throw new NotFoundException(`Curso com ID ${uuid} não encontrado.`);
+      }
+
+      return course.components;
+    } catch (error) {
+      throw new InternalServerErrorException('Erro ao buscar componentes do curso.');
+    }
+  }
 }
